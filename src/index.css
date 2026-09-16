@@ -1,0 +1,237 @@
+/* Global application styles */
+@layer base {
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Font utility classes */
+.font-devanagari {
+  font-family: 'Noto Sans Devanagari', 'Mukta', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.font-mukta {
+  font-family: 'Mukta', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Dotted line pattern for bill counterfoil */
+.border-dotted-custom {
+  border-bottom: 2px dashed #4b5563;
+}
+
+/* Valuation Sheet fine table grid */
+.govt-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.govt-table th, .govt-table td {
+  border: 1px solid #7f1d1d;
+  padding: 2px 4px;
+  font-size: 10.5px;
+  line-height: 1.25;
+}
+.govt-table-nested th, .govt-table-nested td {
+  border: 1px solid #991b1b;
+  padding: 1.5px 3px;
+}
+
+/* Architectural floorplan blueprint lines */
+.blueprint-grid {
+  background-color: #ffffff;
+  background-image: linear-gradient(#e2e8f0 1px, transparent 1px),
+                    linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+/* Abstract from Assessment Register tables */
+.doc-border {
+  border: 1px solid #1f2937;
+}
+.doc-border-double {
+  border: 3px double #1f2937;
+}
+.table-bordered {
+  border-collapse: collapse;
+  border: 1px solid #111827;
+}
+.table-bordered th, 
+.table-bordered td {
+  border: 1px solid #111827;
+}
+.compact-table td, .compact-table th {
+  padding: 3px 4px;
+  line-height: 1.25;
+}
+
+/* Counter Payment Receipt */
+.receipt-border-dark {
+  border-color: #1e3a8a;
+}
+.receipt-border-gold {
+  border-color: #92400e;
+}
+
+/* Print Settings */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Hide everything except the modal when print-active */
+  header, nav, aside, .no-print, [data-purpose="toolbar-header"], [data-purpose="pdf-controls"], #viewer-toolbar {
+    display: none !important;
+  }
+
+  .print-document-target {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  @page {
+    size: auto;
+    margin: 6mm;
+  }
+}
+
+/* Online Payment Gateway Angled Backdrop & Animations */
+.hero-angled-bg {
+  background: #1872e8;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 480px;
+  z-index: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 68%, 0 100%);
+}
+
+.sub-angle {
+  background: rgba(255, 255, 255, 0.08);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 540px;
+  z-index: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
+}
+
+/* Custom QR pattern styling */
+.qr-noise-pattern {
+  background-image: 
+    radial-gradient(#1f2937 18%, transparent 19%),
+    radial-gradient(#1f2937 18%, transparent 19%);
+  background-size: 7px 7px;
+  background-position: 0 0, 3.5px 3.5px;
+}
+
+/* Coin spinning animation for processing state */
+@keyframes flipCoin {
+  0% { transform: rotateY(0deg) scale(1); }
+  50% { transform: rotateY(180deg) scale(1.08); }
+  100% { transform: rotateY(360deg) scale(1); }
+}
+
+.coin-spin {
+  animation: flipCoin 1.4s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* Payment Error Animation */
+@keyframes slideDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-error-card {
+  animation: slideDownFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Button Gradient Accents - Subtle & High Contrast (Referenced from user design) */
+.btn-gradient-abstract {
+  background: linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+.btn-gradient-abstract:hover {
+  opacity: 0.94;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.btn-gradient-notice {
+  background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+.btn-gradient-notice:hover {
+  opacity: 0.94;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.btn-gradient-valuation {
+  background: linear-gradient(90deg, #d97706 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+.btn-gradient-valuation:hover {
+  opacity: 0.94;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+}
+
+.btn-gradient-receipts {
+  background: linear-gradient(90deg, #0284c7 0%, #0891b2 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+.btn-gradient-receipts:hover {
+  opacity: 0.94;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+}
+
+.btn-gradient-accent {
+  background: linear-gradient(90deg, #059669 0%, #0d9488 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+.btn-gradient-accent:hover {
+  opacity: 0.95;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+}
+
+/* Payment amount selection radio button gradient */
+.gradient-payment-selected {
+  background: linear-gradient(90deg, #58bfae 0%, #3dabdf 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+/* Download buttons purple gradient (Receipt and No Due Certificate) */
+.btn-gradient-download {
+  background: linear-gradient(90deg, #54208F 0%, #C6539B 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+.btn-gradient-download:hover {
+  background: linear-gradient(90deg, #461A7A 0%, #AA4385 100%) !important;
+  box-shadow: 0 4px 12px rgba(84, 32, 143, 0.35);
+}
+
+
+
