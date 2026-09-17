@@ -76,8 +76,21 @@ export const translations = {
     today: "Today",
     thisWeek: "This Week",
     thisMonth: "This Month",
-    custom: "Custom",
     export: "Export",
+
+    // Bill Distribution Metrics
+    totalProperties: "Total Properties",
+    totalBillDistribution: "Total Bill Distribution",
+    billsDelivered: "Bills Delivered",
+    billsAffixed: "Bills Affixed",
+    billRefused: "Bill Refused",
+    propertyNotFound: "Property Not Found",
+    seizureNotice: "Seizure Notice",
+    legalDemandNotice: "Legal Demand Notice",
+    mobileNumberUpdated: "Mobile Number Updated",
+    emailIdUpdated: "Email ID Updated",
+    alternateMobileNumber: "Alternate Mobile Number",
+    alternateAddress: "Alternate Address",
   },
   mr: {
     // TopNav & Common
@@ -154,8 +167,21 @@ export const translations = {
     today: "आज",
     thisWeek: "या आठवड्यात",
     thisMonth: "या महिन्यात",
-    custom: "सानुकूल",
     export: "निर्यात करा",
+
+    // Bill Distribution Metrics
+    totalProperties: "एकूण मालमत्ता",
+    totalBillDistribution: "एकूण बिल वाटप",
+    billsDelivered: "बिल दिले",
+    billsAffixed: "मालमत्तेस बिल चिकटवले",
+    billRefused: "बिल घेण्यास नकार",
+    propertyNotFound: "मालमत्ता मिळाली नाही",
+    seizureNotice: "जप्ती नोटीस",
+    legalDemandNotice: "कायदेशीर मागणी नोटीस",
+    mobileNumberUpdated: "मोबाइल नं. अद्यावत करणे",
+    emailIdUpdated: "ई-मेल आयडी अद्यावत करणे",
+    alternateMobileNumber: "पर्यायी मोबाइल नं. घेणे",
+    alternateAddress: "पर्यायी पत्ता घेणे",
   },
   hi: {
     // TopNav & Common
@@ -232,8 +258,21 @@ export const translations = {
     today: "आज",
     thisWeek: "इस सप्ताह",
     thisMonth: "इस महीने",
-    custom: "कस्टम",
     export: "निर्यात करें",
+
+    // Bill Distribution Metrics
+    totalProperties: "कुल संपत्तियां",
+    totalBillDistribution: "कुल बिल वितरण",
+    billsDelivered: "बिल वितरित",
+    billsAffixed: "संपत्ति पर बिल चिपकाया",
+    billRefused: "बिल लेने से इनकार",
+    propertyNotFound: "संपत्ति नहीं मिली",
+    seizureNotice: "जब्ती नोटिस",
+    legalDemandNotice: "कानूनी मांग नोटिस",
+    mobileNumberUpdated: "मोबाइल नं. अद्यतन",
+    emailIdUpdated: "ई-मेल आईडी अद्यतन",
+    alternateMobileNumber: "वैकल्पिक मोबाइल नं.",
+    alternateAddress: "वैकल्पिक पता",
   },
 };
 

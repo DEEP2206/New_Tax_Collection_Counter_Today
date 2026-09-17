@@ -7,7 +7,9 @@ import PaymentModeCard from "./components/PaymentModeCard";
 import DateFilterBar from "./components/DateFilterBar";
 import OfflinePaymentView from "./components/OfflinePayment/OfflinePaymentView";
 import OnlinePaymentView from "./components/OnlinePayment/OnlinePaymentView";
+import UseTypeWiseView from "./components/UseTypeWiseView";
 import { chartDatasets as initialDatasets } from "./data/chartData";
+import { getBillDistributionSummary } from "./data/billDistributionData";
 
 import { useLanguage } from "./context/LanguageContext";
 
@@ -21,6 +23,7 @@ export default function App() {
   const [activeSubmenu, setActiveSubmenu] = useState("offline_payment");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const billSummary = getBillDistributionSummary();
 
   // Toggle Desktop Sidebar collapse/expand or Mobile drawer
   const handleToggleSidebar = () => {
@@ -194,6 +197,9 @@ export default function App() {
                 setActiveMenu("dashboard");
               }}
             />
+          ) : activeSubmenu === "use_type_wise" ? (
+            /* Redesigned Use Type Wise Collection View */
+            <UseTypeWiseView />
           ) : (
             /* Dashboard View */
             <div className="p-margin-mobile md:p-margin-desktop space-y-stack-lg">
@@ -257,50 +263,137 @@ export default function App() {
                 </div>
               )}
 
-              {activeSubmenu === "use_type_wise" && (
-                <div className="bg-surface-container-lowest rounded-xl p-6 border border-surface-container shadow-sm mb-stack-lg animate-in fade-in duration-200">
-                  <h3 className="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-primary">category</span>
-                    Use Type Wise Property Revenue
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    {[
-                      { type: "Residential", amount: "₹ 24,50,000", pct: "57.6%", propCount: "8,420 Props", color: "bg-primary" },
-                      { type: "Commercial", amount: "₹ 13,80,000", pct: "32.5%", propCount: "2,150 Props", color: "bg-secondary" },
-                      { type: "Industrial", amount: "₹ 3,20,000", pct: "7.5%", propCount: "420 Props", color: "bg-warning-amber" },
-                      { type: "Open Land / Other", amount: "₹ 1,00,000", pct: "2.4%", propCount: "255 Props", color: "bg-surface-variant" },
-                    ].map((u) => (
-                      <div key={u.type} className="p-4 rounded-lg bg-surface-container/40 border border-outline-variant/50">
-                        <p className="text-xs font-semibold text-on-surface-variant mb-1">{u.type}</p>
-                        <p className="text-lg font-bold text-on-surface">{u.amount}</p>
-                        <div className="flex justify-between items-center text-xs text-outline mt-2 mb-1.5">
-                          <span>{u.propCount}</span>
-                          <span className="font-bold text-on-surface">{u.pct}</span>
-                        </div>
-                        <div className="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
-                          <div className={`h-1.5 rounded-full ${u.color}`} style={{ width: u.pct }}></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {activeSubmenu === "bill_distribution_dashboard" && (
                 <div className="bg-surface-container-lowest rounded-xl p-6 border border-surface-container shadow-sm mb-stack-lg animate-in fade-in duration-200">
                   <h3 className="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
                     <span className="material-symbols-outlined text-primary">receipt_long</span>
                     Bill Distribution &amp; Notice Status
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {[
-                      { status: "Total Bills Generated", val: "45,200", sub: "100% Demand generated", color: "text-primary" },
-                      { status: "Hand Delivered (Physical)", val: "28,400", sub: "62.8% Field dispatched", color: "text-secondary" },
-                      { status: "SMS / WhatsApp Delivered", val: "13,700", sub: "30.3% Digital receipts", color: "text-success-leaf" },
-                      { status: "Pending / In-Transit", val: "3,100", sub: "6.9% Under distribution", color: "text-warning-amber" },
+                      {
+                        key: "total_properties",
+                        status: t("totalProperties", "Total Properties"),
+                        val: (billSummary.totalProperties || 0).toLocaleString("en-IN"),
+                        sub: "Total registered in Ward",
+                        color: "text-primary",
+                        icon: "home_work",
+                        gradient: "from-blue-600 via-indigo-500 to-sky-500",
+                      },
+                      {
+                        key: "total_bill_distribution",
+                        status: t("totalBillDistribution", "Total Bill Distribution"),
+                        val: (billSummary.totalBillDistribution || 0).toLocaleString("en-IN"),
+                        sub: "0% Distribution rate",
+                        color: "text-secondary",
+                        icon: "assignment_turned_in",
+                        gradient: "from-purple-600 via-violet-500 to-indigo-400",
+                      },
+                      {
+                        key: "bills_delivered",
+                        status: t("billsDelivered", "Bills Delivered"),
+                        val: (billSummary.billsDelivered || 0).toLocaleString("en-IN"),
+                        sub: "Direct hand delivery",
+                        color: "text-success-leaf",
+                        icon: "mark_email_read",
+                        gradient: "from-emerald-500 via-teal-500 to-green-400",
+                      },
+                      {
+                        key: "bills_affixed",
+                        status: t("billsAffixed", "Bills Affixed"),
+                        val: (billSummary.billsAffixed || 0).toLocaleString("en-IN"),
+                        sub: "Affixed on premises",
+                        color: "text-primary",
+                        icon: "push_pin",
+                        gradient: "from-cyan-500 via-sky-500 to-blue-400",
+                      },
+                      {
+                        key: "bill_refused",
+                        status: t("billRefused", "Bill Refused"),
+                        val: (billSummary.billRefused || 0).toLocaleString("en-IN"),
+                        sub: "Refused by occupier",
+                        color: "text-warning-amber",
+                        icon: "cancel",
+                        gradient: "from-amber-500 via-orange-500 to-rose-400",
+                      },
+                      {
+                        key: "property_not_found",
+                        status: t("propertyNotFound", "Property Not Found"),
+                        val: (billSummary.propertyNotFound || 0).toLocaleString("en-IN"),
+                        sub: "Untraceable premises",
+                        color: "text-error",
+                        icon: "location_off",
+                        gradient: "from-red-600 via-rose-500 to-pink-500",
+                      },
+                      {
+                        key: "seizure_notice",
+                        status: t("seizureNotice", "Seizure Notice"),
+                        val: (billSummary.seizureNotice || 0).toLocaleString("en-IN"),
+                        sub: "Property attachment notice",
+                        color: "text-rose-600",
+                        icon: "gavel",
+                        gradient: "from-rose-600 via-pink-600 to-fuchsia-500",
+                      },
+                      {
+                        key: "legal_demand_notice",
+                        status: t("legalDemandNotice", "Legal Demand Notice"),
+                        val: (billSummary.legalDemandNotice || 0).toLocaleString("en-IN"),
+                        sub: "Formal statutory demand",
+                        color: "text-indigo-600",
+                        icon: "policy",
+                        gradient: "from-indigo-600 via-blue-600 to-cyan-500",
+                      },
+                      {
+                        key: "mobile_number_updated",
+                        status: t("mobileNumberUpdated", "Mobile Number Updated"),
+                        val: (billSummary.mobileNumberUpdated || 0).toLocaleString("en-IN"),
+                        sub: "Primary contact verified",
+                        color: "text-secondary",
+                        icon: "phonelink_ring",
+                        gradient: "from-teal-500 via-emerald-400 to-cyan-400",
+                      },
+                      {
+                        key: "email_id_updated",
+                        status: t("emailIdUpdated", "Email ID Updated"),
+                        val: (billSummary.emailIdUpdated || 0).toLocaleString("en-IN"),
+                        sub: "Digital contact verified",
+                        color: "text-success-leaf",
+                        icon: "alternate_email",
+                        gradient: "from-green-600 via-emerald-500 to-teal-400",
+                      },
+                      {
+                        key: "alternate_mobile_number",
+                        status: t("alternateMobileNumber", "Alternate Mobile Number"),
+                        val: (billSummary.alternateMobileNumber || 0).toLocaleString("en-IN"),
+                        sub: "Secondary contact captured",
+                        color: "text-cyan-600",
+                        icon: "contact_phone",
+                        gradient: "from-yellow-400 via-amber-500 to-orange-400",
+                      },
+                      {
+                        key: "alternate_address",
+                        status: t("alternateAddress", "Alternate Address"),
+                        val: (billSummary.alternateAddress || 0).toLocaleString("en-IN"),
+                        sub: "Secondary address captured",
+                        color: "text-primary",
+                        icon: "home_pin",
+                        gradient: "from-blue-700 via-indigo-600 to-slate-600",
+                      },
                     ].map((b) => (
-                      <div key={b.status} className="p-4 rounded-lg bg-surface-container/40 border border-outline-variant/50">
-                        <p className="text-xs font-semibold text-on-surface-variant mb-1">{b.status}</p>
+                      <div
+                        key={b.key}
+                        className="relative overflow-hidden p-4 pt-4.5 rounded-lg bg-surface-container/40 border border-outline-variant/50 hover:border-primary/30 transition-all shadow-xs"
+                      >
+                        {/* Distinct subtle rounded gradient top border */}
+                        <div
+                          className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${b.gradient}`}
+                        />
+                        <span className="material-symbols-outlined text-xl text-outline mb-2 block">
+                          {b.icon}
+                        </span>
+                        <p className="text-xs font-semibold text-on-surface-variant mb-1 line-clamp-1" title={b.status}>
+                          {b.status}
+                        </p>
                         <p className={`text-2xl font-bold ${b.color}`}>{b.val}</p>
                         <p className="text-xs text-outline mt-1">{b.sub}</p>
                       </div>
